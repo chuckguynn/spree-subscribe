@@ -80,7 +80,7 @@ class Spree::Subscription < ActiveRecord::Base
   def select_shipping
     # DD: shipments are created when order state goes to "delivery"
     shipment = self.new_order.shipments.first # DD: there should be only one shipment
-    rate = shipment.shipping_rates.first{|r| r.shipping_method.id == self.shipping_method.id }
+    rate = shipment.shipping_rates.first{|r| r.shipping_method.id == reorder_shipping_method.id }
     raise "No rate was found. TODO: Implement logic to select the cheapest rate." unless rate
     shipment.selected_shipping_rate_id = rate.id
     shipment.save
@@ -138,6 +138,10 @@ class Spree::Subscription < ActiveRecord::Base
 
   def self.reorder_states
     @reorder_states ||= state_machine.states.map(&:name) - ["cart"]
+  end
+
+  def reorder_shipping_method
+    reorder_shipping_method = Spree::ShippingMethod.find_by_name(:name => "Economy (5-10 Business Days - $0.00)")
   end
 
 end
