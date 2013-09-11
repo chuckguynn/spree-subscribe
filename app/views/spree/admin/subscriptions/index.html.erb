@@ -53,7 +53,7 @@
         </td>
         <td class="subscription-status"><%= sub.state.titleize %></td>
         <td class='actions subscription-actions align-center' data-hook="admin_subscriptions_index_row_actions">
-          <%= link_to_edit_url edit_admin_subscription_path(sub), :title => "admin_edit_#{dom_id(sub)}", :no_text => true %>
+          <%# comment out until edit action completed= link_to_edit_url (edit_admin_subscription_path(sub)), :title => "admin_edit_#{dom_id(sub)}", :no_text => true %>
         </td>
       </tr>
     <% end %>
